@@ -6,20 +6,21 @@ const game_start=document.querySelector('#game_start');
 const save=document.querySelector('#save');
 const copy=document.querySelector('#copy');
 const share=document.querySelector('#share');
-var toastLiveExample = document.getElementById('liveToast')
+const toastLiveExample = document.getElementById('liveToast')
+const new_btn=document.querySelector('#new');
 
 commit.addEventListener('click',function(e){
     e.preventDefault();
     let email=email_input.value;
     let password=password_input.value;
-    //progream_status 0送出查詢 1開啟遊戲
+    //progream_status 0送出查詢 1開啟遊戲 2新建
     POST_TO_API(email,password,0)
 })
 game_start.addEventListener('click',function(e){
     e.preventDefault();
     let email=email_input.value;
     let password=password_input.value;
-    //progream_status 0送出查詢 1開啟遊戲
+    //progream_status 0送出查詢 1開啟遊戲 2新建
     POST_TO_API(email,password,1)
 })
 const txt= document.querySelector('#iputGroupFile01');
@@ -124,7 +125,13 @@ $(document).ready(function () {
         exp.textContent=exp.textContent+'\n已過期'
     }
 });
-
+new_btn.addEventListener('click',(e)=>{
+    e.preventDefault();
+    let email=email_input.value;
+    let password=password_input.value;
+    //progream_status 0送出查詢 1開啟遊戲 2新建
+    POST_TO_API(email,password,2);
+})
 
 
 function saveFile () {
