@@ -3,37 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>轟印者登入工具</title>
+    <meta name="author" content="wutim111">
+    <meta
+    name="description"
+    content="一個封印者登入工具,可以在三小時內免給帳密讓其他人登入帳號" />
     <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container d-flex">
-        <div class="row mt-5 border p-3 w-100">
-            <div class="col d-flex justify-content-end">
-                <form >
-                <div class="input-group mb-3 w-75">
-                    <label class="input-group-text w-50" for="inputGroupFile01">載入帳密</label>
+    <div class="container ">
+        <div class="row mt-5 border p-3 w-100 d-flex flex-column flex-lg-row">
+            <div class="col d-flex justify-content-center justify-content-lg-end ">
+                <form class="d-flex flex-column justify-content-center w-100 align-items-center">
+                <div class="input-group mb-3 d-none d-lg-flex w-75">
+                    <label class="input-group-text" for="inputGroupFile01">載入帳密</label>
                     <input type="file" class="form-control" id="iputGroupFile01">
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Email</label>
-                  <input type="email" class="form-control w-75" id="exampleInputEmail1" aria-describedby="emailHelp">                </div>
+                  <input type="email" class="form-control w-100" id="exampleInputEmail1" aria-describedby="emailHelp">                </div>
                 <div class="mb-3">
                   <label for="exampleInputPassword1" class="form-label">Password</label>
-                  <input type="password" class="form-control w-75" id="exampleInputPassword1">
+                  <input type="password" class="form-control w-100" id="exampleInputPassword1">
                 </div>
-                <button type="submit" class="btn btn-primary" id="commit">送出查詢</button>
-                <button type="submit" class="btn btn-primary" id="game_start">開啟遊戲</button>
+                <div class="d-flex justify-content-around w-100 flex-column flex-lg-row align-items-center text-center">
+                    <button type="submit" class="btn btn-primary my-3 py-lg-2 w-25 " id="commit">送出查詢</button>
+                    <button type="submit" class="btn btn-primary my-3 py-lg-2 w-25 d-none d-lg-inline " id="game_start">開啟遊戲</button>
+                    <a href="#" class="btn btn-primary my-3 py-lg-2 w-25 d-none d-lg-inline " id="save">下載帳密</a>
+                </div>
+                
               </form>
             </div>
-            <div class="col">
-                <div class="fs-1">Share</div>
-                <textarea name="" id="textarea" class="h-50 w-50" class="w-50" id="" cols="20" rows="10"></textarea>
+            <div class="col mt-3 mt-lg-0 ms-2 d-flex flex-column">
+                <div class="d-flex flex-column">
+                    <h2 class="fs-1">Share</h2>
+                    <h6 class="mt-auto" id="exp">有效期限:</h6>
+                </div>
+                <textarea name="" id="textarea" class="h-50 w-100" class="w-50" id="" cols="20" rows="10"></textarea>
+                <div class="mt-2 d-flex mb-2 ">
+                    <p class="fw-bold">上面這串在有效期間內貼網址就能開遊戲 <br>
+                        不用帳號密碼</p>
+                    <a href="#" class="btn btn-primary  d-none d-lg-inline w-25 px-4 ms-auto text-center" id="copy">複製</a>
+                    <a href="#" class="btn btn-primary  d-lg-none my-3 py-4 w-100" id="share">分享</a>
+                </div>
+                
             </div>
         </div>
-        
+        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+              <div class="toast-header">
+                <strong class="me-auto">複製成功</strong>
+                <small>Share已複製</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+              </div>
+              <div class="toast-body">
+                Share已複製,可以拿去貼給別人了
+              </div>
+            </div>
+          </div>
     </div>
-<script src="./node_modules/bootstrap/js/index.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="./js/all.js"></script>
 </body>

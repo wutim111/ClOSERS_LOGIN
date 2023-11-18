@@ -3,6 +3,10 @@ const email_input= document.querySelector('#exampleInputEmail1');
 const password_input= document.querySelector('#exampleInputPassword1');
 const textarea=document.querySelector('#textarea');
 const game_start=document.querySelector('#game_start');
+const save=document.querySelector('#save');
+const copy=document.querySelector('#copy');
+const share=document.querySelector('#share');
+var toastLiveExample = document.getElementById('liveToast')
 
 commit.addEventListener('click',function(e){
     e.preventDefault();
@@ -40,6 +44,10 @@ txt.onchange = function() {
 };
 
 function POST_TO_API(email,password,progream_status){
+    if(Date.parse(getCookieByName('exp')).valueOf() > Date.parse(new Date().toDateString()))
+    {
+        return;
+    }
     var settings = {
         "url": "https://api.closers.com.tw/v1/auth-game/signIn",
         "method": "POST",
@@ -63,9 +71,94 @@ function POST_TO_API(email,password,progream_status){
                 textarea.value='naddiclaunchertwn:'+response.data.userGameInfo.token;
                 window.open('naddiclaunchertwn:'+response.data.userGameInfo.token);
             }
+            let exp=document.querySelector('#exp');
+            const payload = JSON.parse(atob(response.data.userGameInfo.token.split('.')[1]));
+            const expDate = new Date(new Date(0).setUTCSeconds(payload.exp));
+            exp.textContent='有效期限:　'+expDate;
+
+            document.cookie='token='+encodeURIComponent(response.data.userGameInfo.token);
+            document.cookie='exp='+encodeURIComponent(expDate);
         }
         else{
             alert('帳號密碼輸入有誤,無法取得token')
         }
     });
+}
+
+save.addEventListener('click',function(e){
+    e.preventDefault();
+    saveFile();
+});
+
+copy.addEventListener('click',function(e){
+    e.preventDefault();
+    const inputText = document.querySelector('.inputText');
+    navigator.clipboard.writeText(textarea.value);
+    var toast = new bootstrap.Toast(toastLiveExample);
+    toast.show();
+})
+
+const shareData = {
+    text:textarea.value
+}
+
+share.addEventListener('click',async()=>{
+    try {
+        await navigator.share(shareData)
+    } catch(err) {
+        console.log( 'Error: ' + err );
+    }
+})
+$(document).ready(function () {
+    if (getCookieByName('token') != undefined){
+        textarea.value='naddiclaunchertwn:'+getCookieByName('token');
+    }
+    if (getCookieByName('exp') != undefined){
+        exp.textContent='有效期限:　'+getCookieByName('exp');
+    }
+    if (Date.parse(getCookieByName('exp')).valueOf() < Date.parse(new Date().toDateString())){
+        exp.textContent=exp.textContent+'\n已過期'
+    }
+});
+
+
+
+function saveFile () {
+    var data = 'Email:'+email_input.value+'\n'+'Password:'+password_input.value;
+    var name = 'Login.txt';//文件名
+    this.exportRaw(data, name);
+}
+
+
+function exportRaw (data, name) {
+    var urlObject = window.URL || window.webkitURL || window;
+    var export_blob = new Blob([data]);
+    var save_link = document.createElementNS("http://www.w3.org/1999/xhtml", "a")
+    save_link.href = urlObject.createObjectURL(export_blob);
+    save_link.download = name;
+    save_link.click();
+}
+
+function parseCookie() {
+    var cookieObj = {};
+    var cookieAry = document.cookie.split(';');
+    var cookie;
+    
+    for (var i=0, l=cookieAry.length; i<l; ++i) {
+        cookie = jQuery.trim(cookieAry[i]);
+        cookie = cookie.split('=');
+        cookieObj[cookie[0]] = cookie[1];
+    }
+    
+    return cookieObj;
+}
+
+
+function getCookieByName(name) {
+    var value = parseCookie()[name];
+    if (value) {
+        value = decodeURIComponent(value);
+    }
+
+    return value;
 }
