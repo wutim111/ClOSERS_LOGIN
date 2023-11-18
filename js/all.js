@@ -46,7 +46,11 @@ txt.onchange = function() {
 function POST_TO_API(email,password,progream_status){
     if(Date.parse(getCookieByName('exp')).valueOf() > Date.parse(new Date().toDateString()))
     {
-        return;
+        if(progream_status==1)
+            return;
+        else if (progream_status==2){
+            window.open('naddiclaunchertwn:'+getCookieByName('token'));
+        }
     }
     var settings = {
         "url": "https://api.closers.com.tw/v1/auth-game/signIn",
