@@ -97,7 +97,10 @@ save.addEventListener('click',function(e){
 
 copy.addEventListener('click',function(e){
     e.preventDefault();
-    const inputText = document.querySelector('.inputText');
+    if (textarea.value==''){
+        alert('空的還是別複製吧');
+        return;
+    }
     navigator.clipboard.writeText(textarea.value);
     var toast = new bootstrap.Toast(toastLiveExample);
     toast.show();
@@ -135,6 +138,10 @@ new_btn.addEventListener('click',(e)=>{
 
 
 function saveFile () {
+    if ((email_input.value=='') || (password_input.value=='')){
+        alert('欄位有空,還是別下載吧');
+        return;
+    }
     var data = 'Email:'+email_input.value+'\n'+'Password:'+password_input.value;
     var name = 'Login.txt';//文件名
     this.exportRaw(data, name);
