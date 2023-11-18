@@ -1,2 +1,0 @@
-Email:{your_Email}
-Password:{your_Password}
