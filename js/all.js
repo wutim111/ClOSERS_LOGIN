@@ -8,6 +8,7 @@ const copy=document.querySelector('#copy');
 const share=document.querySelector('#share');
 const toastLiveExample = document.getElementById('liveToast')
 const new_btn=document.querySelector('#new');
+const acc=document.querySelector('#acc');
 
 commit.addEventListener('click',function(e){
     e.preventDefault();
@@ -67,7 +68,6 @@ function POST_TO_API(email,password,progream_status){
         }),
     };
     $.ajax(settings).done(function (response) {
-        console.log(response);
         if (response.message=='Success'){
             if (progream_status==0){ 
                 textarea.value='naddiclaunchertwn:'+response.data.userGameInfo.token;
@@ -81,8 +81,10 @@ function POST_TO_API(email,password,progream_status){
             const expDate = new Date(new Date(0).setUTCSeconds(payload.exp));
             exp.textContent='有效期限:　'+expDate;
 
+            acc.textContent=response.data.userGameInfo.display_name;
             document.cookie='token='+encodeURIComponent(response.data.userGameInfo.token);
             document.cookie='exp='+encodeURIComponent(expDate);
+            document.cookie='acc='+encodeURIComponent(acc.textContent);
         }
         else{
             alert('帳號密碼輸入有誤,無法取得token')
@@ -123,6 +125,9 @@ $(document).ready(function () {
     }
     if (getCookieByName('exp') != undefined){
         exp.textContent='有效期限:　'+getCookieByName('exp');
+    }
+    if (getCookieByName('acc')!= undefined){
+        acc.textContent=getCookieByName('acc');
     }
     if (Date.parse(getCookieByName('exp')).valueOf() < Date.parse(new Date().toDateString())){
         exp.textContent=exp.textContent+'\n已過期'
