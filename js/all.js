@@ -46,9 +46,9 @@ txt.onchange = function() {
 function POST_TO_API(email,password,progream_status){
     if(Date.parse(getCookieByName('exp')).valueOf() > Date.parse(new Date().toDateString()))
     {
-        if(progream_status==1)
+        if(progream_status==0)
             return;
-        else if (progream_status==2){
+        else if (progream_status==1){
             window.open('naddiclaunchertwn:'+getCookieByName('token'));
         }
     }
