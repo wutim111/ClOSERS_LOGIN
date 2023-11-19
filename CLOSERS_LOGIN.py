@@ -68,8 +68,6 @@ def chk_access_token(JWT):
   
   dtime = datetime.datetime.now()
   now=int(time.mktime(dtime.timetuple()))
-  print(now)
-  print(token_exp)
 
   #Exp_time=time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(token_exp))
 
@@ -101,13 +99,14 @@ def read_token_txt():
 
 def write_token_txt(text):
   try:
-    f = open('token.txt','w+')
+    f = open('token.txt','w')
     f.write(text)
   finally:
     f.close()
-def white_share_txt():
+
+def write_share_txt():
   try:
-    f = open('share.txt','w+')
+    f = open('share.txt','w')
     f.write('naddiclaunchertwn:'+access_token)
   finally:
     f.close()
@@ -130,5 +129,5 @@ else :
       access_token=POST_to_API(Login)
       write_token_txt(access_token)
       
-white_share_txt()
+write_share_txt()
 start_game(access_token)
