@@ -46,8 +46,10 @@ txt.onchange = function() {
 };
 
 function POST_TO_API(email,password,progream_status){
-    if(Date.parse(getCookieByName('exp')).valueOf() > Date.parse(new Date().toDateString()))
+    if(Date.parse(getCookieByName('exp')).valueOf() > Date.parse(new Date(new Date().getTime+8*3600*1000).toDateString()).valueOf())
     {
+        console.log(Date.parse(getCookieByName('exp')).valueOf());
+        console.log(Date.parse(new Date(new Date()+8*3600*1000).toDateString()).valueOf());
         if(progream_status==0)
             return;
         else if (progream_status==1){
@@ -129,7 +131,7 @@ $(document).ready(function () {
     if (getCookieByName('acc')!= undefined){
         acc.textContent=getCookieByName('acc');
     }
-    if (Date.parse(getCookieByName('exp')).valueOf() < Date.parse(new Date().toDateString())){
+    if (Date.parse(getCookieByName('exp')).valueOf() < Date.parse(new Date(new Date().getTime+8*3600*1000).toDateString()).valueOf()){
         exp.textContent=exp.textContent+'\n已過期'
     }
 });
