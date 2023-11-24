@@ -1,3 +1,4 @@
+#2023/11/25 share.txt跟Token.txt其實差不多 那我token寫到share就好 不另外單獨寫Token
 import webbrowser    
 import requests
 import json
@@ -79,7 +80,7 @@ def chk_access_token(JWT):
 def is_token_txt_null():
   text=''
   try :
-    f = open('token.txt','r+')
+    f = open('share.txt','r+')
     text=f.read()
   finally :
     f.close()
@@ -91,18 +92,11 @@ def is_token_txt_null():
 def read_token_txt():
   token=''
   try :
-    f = open('token.txt','r')
+    f = open('share.txt','r')
     token= f.read()
   finally:
     f.close()
-  return token
-
-def write_token_txt(text):
-  try:
-    f = open('token.txt','w')
-    f.write(text)
-  finally:
-    f.close()
+  return token.replace('naddiclaunchertwn:','')
 
 def write_share_txt():
   try:
@@ -116,18 +110,14 @@ init_var()
 Login=read_Login()
 if is_token_txt_null() :
   access_token=POST_to_API(Login)
-  write_token_txt(access_token)
 else :
   access_token=read_token_txt()
   if (chk_access_token(access_token)) :
     access_token=POST_to_API(Login)
-    write_token_txt(access_token)
   else :
     try:
       access_token=read_token_txt()
     except:
       access_token=POST_to_API(Login)
-      write_token_txt(access_token)
-      
 write_share_txt()
 start_game(access_token)
