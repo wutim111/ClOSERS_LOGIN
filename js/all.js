@@ -87,6 +87,8 @@ function POST_TO_API(email,password,progream_status){
             document.cookie='token='+encodeURIComponent(response.data.userGameInfo.token);
             document.cookie='exp='+encodeURIComponent(expDate);
             document.cookie='acc='+encodeURIComponent(acc.textContent);
+            document.cookie='prev_email='+email_input.value;
+            document.cookie='prev_pwd='+password_input.value;
         }
         else{
             alert('帳號密碼輸入有誤,無法取得token')
@@ -133,6 +135,10 @@ $(document).ready(function () {
     }
     if (Date.parse(getCookieByName('exp')).valueOf() < Date.parse(new Date(new Date().getTime+8*3600*1000).toDateString()).valueOf()){
         exp.textContent=exp.textContent+'\n已過期'
+    }
+    if (getCookieByName('prev_email') != undefined){
+        email_input.value=getCookieByName('prev_email');
+        password_input.value=getCookieByName('prev_pwd');
     }
 });
 new_btn.addEventListener('click',(e)=>{
