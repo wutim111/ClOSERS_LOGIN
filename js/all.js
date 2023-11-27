@@ -46,14 +46,16 @@ txt.onchange = function() {
 };
 
 function POST_TO_API(email,password,progream_status){
-    if(Date.parse(getCookieByName('exp')).valueOf() > Date.parse(new Date(new Date().getTime+8*3600*1000).toDateString()).valueOf())
+    console.log(Date.parse(getCookieByName('exp')).valueOf());
+    console.log(Date.now());
+    if(Date.parse(getCookieByName('exp')).valueOf() > Date.now())
     {
-        console.log(Date.parse(getCookieByName('exp')).valueOf());
-        console.log(Date.parse(new Date(new Date()+8*3600*1000).toDateString()).valueOf());
         if(progream_status==0)
             return;
         else if (progream_status==1){
-            window.open('naddiclaunchertwn:'+getCookieByName('token'));
+            document.location.href="naddiclaunchertwn:"+getCookieByName('token');
+            //window.open('naddiclaunchertwn:'+getCookieByName('token'));
+            return;
         }
     }
     var settings = {
@@ -76,7 +78,9 @@ function POST_TO_API(email,password,progream_status){
             }
             else if(progream_status==1){
                 textarea.value='naddiclaunchertwn:'+response.data.userGameInfo.token;
-                window.open('naddiclaunchertwn:'+response.data.userGameInfo.token);
+                document.location.href="naddiclaunchertwn:"+response.data.userGameInfo.token;
+                //window.open('naddiclaunchertwn:'+response.data.userGameInfo.token);
+                console.log(123456);
             }
             let exp=document.querySelector('#exp');
             const payload = JSON.parse(atob(response.data.userGameInfo.token.split('.')[1]));
@@ -133,7 +137,7 @@ $(document).ready(function () {
     if (getCookieByName('acc')!= undefined){
         acc.textContent=getCookieByName('acc');
     }
-    if (Date.parse(getCookieByName('exp')).valueOf() < Date.parse(new Date(new Date().getTime+8*3600*1000).toDateString()).valueOf()){
+    if (Date.parse(getCookieByName('exp')).valueOf() < Date.now()){
         exp.textContent=exp.textContent+'\n已過期'
     }
     if (getCookieByName('prev_email') != undefined){
